@@ -15,7 +15,7 @@ const features = [
   {
     icon: Clock,
     title: "Fresh & Fast",
-    description: "Made to order with fresh dough, hand-tossed and delivered piping hot to your door.",
+    description: "Made to order with fresh dough, hand-tossed and ready for pickup — piping hot!",
   },
   {
     icon: Heart,
@@ -36,7 +36,7 @@ export default function AboutSection() {
           className="text-center mb-14"
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Why Ultra Pizza?
+            Why Slice Street?
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             We believe great pizza starts with great ingredients and ends with the perfect fire.

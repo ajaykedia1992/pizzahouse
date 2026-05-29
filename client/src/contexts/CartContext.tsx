@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import type { CartItem, Pizza, AddOn } from "@/lib/pizzaData";
 import { nanoid } from "nanoid";
+
+const CART_STORAGE_KEY = "slicestreet_cart";
 
 interface CartContextType {
   items: CartItem[];
@@ -15,9 +17,34 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+function loadCartFromStorage(): CartItem[] {
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch {
+    // ignore parse errors
+  }
+  return [];
+}
+
+function saveCartToStorage(items: CartItem[]) {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // ignore storage errors
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(() => loadCartFromStorage());
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Persist cart to localStorage whenever it changes
+  useEffect(() => {
+    saveCartToStorage(items);
+  }, [items]);
 
   const addItem = useCallback((pizza: Pizza, size: "small" | "medium", addOns: AddOn[], quantity: number) => {
     const newItem: CartItem = {

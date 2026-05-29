@@ -1,8 +1,9 @@
 /**
- * Ultra Pizza — Menu Data
+ * Desi Slice — Menu Data
  * Design: Fuoco Fresco (Warm Rustic Fire)
  * All pizzas are vegetarian with fire pizza base only
  * Sizes: Small & Medium
+ * Brand: "Desi Slice" — catchy, trendy Indian pizza brand
  */
 
 export interface Pizza {
@@ -30,6 +31,9 @@ export interface CartItem {
   addOns: AddOn[];
   quantity: number;
 }
+
+export const BRAND_NAME = "Slice Street";
+export const WHATSAPP_NUMBER = "919092489091";
 
 export const pizzas: Pizza[] = [
   {
@@ -74,8 +78,55 @@ export const pizzas: Pizza[] = [
     id: "corn-delight",
     name: "Corn & Cheese Delight",
     description: "Sweet golden corn, jalapeños, onions, topped with double mozzarella and cheddar cheese blend.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-margherita-QspKBaJkKgE6K76Z2BnNZG.webp",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-cheese-burst-bXfHenGEGKR5YY39abQ25f.webp",
     prices: { small: 219, medium: 369 },
+  },
+  {
+    id: "onion-fiesta",
+    name: "Onion Fiesta",
+    description: "Golden caramelized onions, sliced red onions, oregano, mozzarella cheese on a rich tomato base. A true onion lover's dream.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-onion-Mf96jN6zKRnArCpB5MUEDy.webp",
+    prices: { small: 199, medium: 329 },
+    tag: "New",
+  },
+  {
+    id: "aloo-masti",
+    name: "Aloo Masti",
+    description: "Spiced potato slices, green peas, onions, green chili, fresh coriander, and mozzarella on our fire-baked crust. Desi vibes!",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-aloo-dL2JvfuBeb9pTsvwaf3DCR.webp",
+    prices: { small: 209, medium: 349 },
+    tag: "Desi Favourite",
+  },
+  {
+    id: "bbq-paneer",
+    name: "BBQ Paneer Blaze",
+    description: "Smoky BBQ-glazed paneer cubes, red onion rings, bell peppers, jalapeños with tangy BBQ sauce drizzle.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-bbq-paneer-AVUfevXVyYzLvBMP4NcPW2.webp",
+    prices: { small: 289, medium: 459 },
+    tag: "Spicy",
+  },
+  {
+    id: "spinach-corn",
+    name: "Spinach & Corn",
+    description: "Fresh baby spinach, sweet corn, cherry tomatoes, garlic, mozzarella and feta cheese crumbles on white sauce.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-spinach-PVsRdQ7HncCbXPd3qQyYs5.webp",
+    prices: { small: 239, medium: 389 },
+  },
+  {
+    id: "peri-peri-veg",
+    name: "Peri Peri Veggie",
+    description: "Colorful bell peppers, onions, jalapeños, corn, drizzled with fiery peri peri sauce and loaded mozzarella.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-peri-peri-RQ2LFqUaEkekEAQS68hTzc.webp",
+    prices: { small: 249, medium: 399 },
+    tag: "Hot",
+  },
+  {
+    id: "cheese-burst",
+    name: "Cheese Burst",
+    description: "Extra thick layer of melted mozzarella and cheddar oozing from the crust. Pure cheesy indulgence on fire-baked base.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663345648637/gWBZrVqsQwpbafj7GffPqW/pizza-cheese-burst-bXfHenGEGKR5YY39abQ25f.webp",
+    prices: { small: 269, medium: 429 },
+    tag: "Cheesy",
   },
 ];
 
@@ -105,11 +156,11 @@ export function formatPrice(price: number): string {
   return `₹${price}`;
 }
 
-export function generateWhatsAppMessage(items: CartItem[], customerName: string, customerPhone: string, customerAddress: string): string {
-  let message = `🍕 *NEW ORDER — Ultra Pizza*\n\n`;
+export function generateWhatsAppMessage(items: CartItem[], customerName: string, customerPhone: string): string {
+  let message = `🍕 *NEW ORDER — ${BRAND_NAME}*\n\n`;
   message += `👤 *Customer:* ${customerName}\n`;
   message += `📞 *Phone:* ${customerPhone}\n`;
-  message += `📍 *Address:* ${customerAddress}\n\n`;
+  message += `🏪 *Pickup Order*\n\n`;
   message += `━━━━━━━━━━━━━━━━━━\n`;
   message += `📋 *Order Details:*\n\n`;
 
@@ -125,13 +176,14 @@ export function generateWhatsAppMessage(items: CartItem[], customerName: string,
 
   message += `━━━━━━━━━━━━━━━━━━\n`;
   message += `💰 *TOTAL: ${formatPrice(calculateCartTotal(items))}*\n\n`;
-  message += `Thank you for ordering! 🙏`;
+  message += `🏪 *I will pick up the order.*\n`;
+  message += `Thank you! 🙏`;
 
   return message;
 }
 
-export function getWhatsAppURL(items: CartItem[], customerName: string, customerPhone: string, customerAddress: string): string {
-  const message = generateWhatsAppMessage(items, customerName, customerPhone, customerAddress);
+export function getWhatsAppURL(items: CartItem[], customerName: string, customerPhone: string): string {
+  const message = generateWhatsAppMessage(items, customerName, customerPhone);
   const encoded = encodeURIComponent(message);
-  return `https://wa.me/919092489091?text=${encoded}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
 }

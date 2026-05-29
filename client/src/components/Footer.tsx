@@ -12,7 +12,7 @@ export default function Footer() {
                 <Flame className="w-4 h-4 text-primary" />
               </div>
               <span className="font-display text-xl font-bold">
-                Ultra<span className="text-primary">Pizza</span>
+                Slice<span className="text-primary">Street</span>
               </span>
             </div>
             <p className="text-sm text-background/60 leading-relaxed">
@@ -34,7 +34,7 @@ export default function Footer() {
               </a>
               <div className="flex items-start gap-2 text-sm text-background/70">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Fire-baked fresh, delivered to your doorstep</span>
+                <span>Fire-baked fresh, ready for pickup</span>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default function Footer() {
 
         <div className="border-t border-background/10 mt-10 pt-6 text-center">
           <p className="text-xs text-background/50">
-            &copy; {new Date().getFullYear()} Ultra Pizza. All rights reserved. Made with fire and passion.
+            &copy; {new Date().getFullYear()} Slice Street. All rights reserved. Made with fire and passion.
           </p>
         </div>
       </div>

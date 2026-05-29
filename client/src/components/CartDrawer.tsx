@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Plus, Minus, Trash2, ShoppingBag, MessageCircle } from "lucide-react";
+import { Plus, Minus, Trash2, ShoppingBag, MessageCircle } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,6 @@ export default function CartDrawer() {
   const [step, setStep] = useState<"cart" | "checkout">("cart");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-  const [customerAddress, setCustomerAddress] = useState("");
 
   const total = calculateCartTotal(items);
 
@@ -28,19 +27,18 @@ export default function CartDrawer() {
   };
 
   const handlePlaceOrder = () => {
-    if (!customerName.trim() || !customerPhone.trim() || !customerAddress.trim()) {
-      toast.error("Please fill in all details");
+    if (!customerName.trim() || !customerPhone.trim()) {
+      toast.error("Please fill in your name and phone number");
       return;
     }
-    const url = getWhatsAppURL(items, customerName, customerPhone, customerAddress);
+    const url = getWhatsAppURL(items, customerName, customerPhone);
     window.open(url, "_blank");
     clearCart();
     setStep("cart");
     setIsCartOpen(false);
     setCustomerName("");
     setCustomerPhone("");
-    setCustomerAddress("");
-    toast.success("Order sent to WhatsApp! We'll confirm shortly.");
+    toast.success("Order sent to WhatsApp! We'll confirm your pickup time shortly.");
   };
 
   const handleClose = () => {
@@ -54,7 +52,7 @@ export default function CartDrawer() {
         <SheetHeader className="px-6 pt-6 pb-4 border-b border-border">
           <SheetTitle className="font-display text-2xl flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-primary" />
-            {step === "cart" ? "Your Cart" : "Checkout"}
+            {step === "cart" ? "Your Cart" : "Pickup Details"}
           </SheetTitle>
         </SheetHeader>
 
@@ -128,9 +126,11 @@ export default function CartDrawer() {
             </>
           ) : (
             <div className="space-y-5">
-              <p className="text-sm text-muted-foreground">
-                Fill in your details below. Your order will be sent via WhatsApp for confirmation.
-              </p>
+              <div className="p-3 rounded-lg bg-accent/50 border border-accent">
+                <p className="text-sm text-accent-foreground font-medium">
+                  🏪 This is a pickup order. Your pizza will be ready for collection!
+                </p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
@@ -150,17 +150,6 @@ export default function CartDrawer() {
                   placeholder="Enter your phone number"
                   value={customerPhone}
                   onChange={e => setCustomerPhone(e.target.value)}
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-sm font-medium">Delivery Address</Label>
-                <Input
-                  id="address"
-                  placeholder="Enter your full delivery address"
-                  value={customerAddress}
-                  onChange={e => setCustomerAddress(e.target.value)}
                   className="h-11"
                 />
               </div>

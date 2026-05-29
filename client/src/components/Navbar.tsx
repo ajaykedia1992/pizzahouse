@@ -1,6 +1,7 @@
 import { ShoppingCart, Flame } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { BRAND_NAME } from "@/lib/pizzaData";
 
 export default function Navbar() {
   const { totalItems, setIsCartOpen } = useCart();
@@ -14,7 +15,7 @@ export default function Navbar() {
             <Flame className="w-5 h-5 text-primary" />
           </div>
           <span className="font-display text-xl md:text-2xl font-bold text-foreground tracking-tight">
-            Ultra<span className="text-primary">Pizza</span>
+            Slice<span className="text-primary">Street</span>
           </span>
         </a>
 
@@ -22,6 +23,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <a href="#menu" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Menu
+          </a>
+          <a href="#story" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Our Story
           </a>
           <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             About
